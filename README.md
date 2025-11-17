@@ -82,14 +82,12 @@ Nous procéderons à une revue de ton code et nous te contacterons pour t'inform
   - PHP 8.4 obligatoire.
   - Utilisation d'un Framework (Symfony, CakePHP, Slim, Laravel,...) facultatif.  
   - Implémentation stricte de l’API OpenAPI fournie.  
-  - Base de données (MongoDb, PostgreSQL ou MySQL).  
   - Tests avec PHPUnit + rapport de couverture.  
 
 - **Frontend**
   - TypeScript 5 obligatoire.
-  - Node.js >=22.12.0
   - Interface utilisateur pour :  
-    - Créer un trajet (station A → station B).  
+    - Créer un trajet (station A → station B) + type de trajet.  
     - Consulter les statistiques par code analytique.
   - Tests avec Vitest/Jest + rapport de couverture.
 
@@ -103,10 +101,12 @@ Nous procéderons à une revue de ton code et nous te contacterons pour t'inform
 ---
 
 ## 🔄 CI/CD complet
+
+Voici notre point de vue de la représentation d'un CI/CD complet :
 - Build : images backend/frontend
 - Qualité : lint + tests + coverage (fail si seuils non atteints)
 - Sécurité : SAST/DAST (ex: phpstan, npm audit, Trivy)
-- Release : tagging sémantique, changelog
+- Release : tagging sémantique ou calendaire, changelog
 - Delivery : push images vers registry, déploiement automatisé (Compose ou SSH)
 
 ## 🎁 Les points Bonus
