@@ -16,6 +16,9 @@ use Doctrine\ORM\Mapping as ORM;
  * - createdAt                   : immutable creation timestamp.
  */
 #[ORM\Entity(repositoryClass: RouteRepository::class)]
+#[ORM\Index(name: "idx_analytic_code", columns: ["analytic_code"])]
+#[ORM\Index(name: "idx_analytic_created", columns: ["analytic_code", "created_at"])]
+#[ORM\Index(name: "idx_created_at", columns: ["created_at"])]
 class Route
 {
     /**
