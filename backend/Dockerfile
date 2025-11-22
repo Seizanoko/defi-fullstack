@@ -10,7 +10,7 @@ RUN apk add --no-cache \
     libzip-dev \
     oniguruma-dev
 
-# Installation des extensions PHP
+# Install PHP extensions
 RUN docker-php-ext-install \
     pdo \
     pdo_pgsql \
@@ -23,3 +23,12 @@ RUN docker-php-ext-install \
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer
 
 WORKDIR /app
+
+# Copy entrypoint script
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+# Set entrypoint
+ENTRYPOINT ["docker-entrypoint.sh"]
+
+CMD ["php-fpm"]

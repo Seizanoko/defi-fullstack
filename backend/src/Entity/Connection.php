@@ -15,8 +15,8 @@ use Doctrine\ORM\Mapping as ORM;
  * - networkName   : name of the network this connection belongs to.
  */
 #[ORM\Entity(repositoryClass: ConnectionRepository::class)]
-#[ORM\Index(name: "idx_parent_station", columns: ["parent_station_id"])]
-#[ORM\Index(name: "idx_child_station", columns: ["child_station_id"])]
+#[ORM\Index(name: "idx_parent_station", columns: ["parent_station"])]
+#[ORM\Index(name: "idx_child_station", columns: ["child_station"])]
 class Connection
 {
     /**
