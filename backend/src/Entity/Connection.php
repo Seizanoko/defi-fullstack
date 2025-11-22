@@ -9,12 +9,14 @@ use Doctrine\ORM\Mapping as ORM;
  * Represents a connection between two stations.
  *
  * Fields:
- * - parentStation : source station (ManyToOne to Station).
- * - childStation  : destination station (ManyToOne to Station).
+ * - parentStation : source station.
+ * - childStation  : destination station.
  * - distance      : distance between stations in kilometer (float).
  * - networkName   : name of the network this connection belongs to.
  */
 #[ORM\Entity(repositoryClass: ConnectionRepository::class)]
+#[ORM\Index(name: "idx_parent_station", columns: ["parent_station_id"])]
+#[ORM\Index(name: "idx_child_station", columns: ["child_station_id"])]
 class Connection
 {
     /**
@@ -30,20 +32,18 @@ class Connection
     /**
      * Parent (source) station.
      *
-     * @var Station|null
+     * @var string|null
      */
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Station $parentStation = null;
+    #[ORM\Column(length: 10)]
+    private ?string $parentStation = null;
 
     /**
      * Child (destination) station.
      *
-     * @var Station|null
+     * @var string|null
      */
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Station $childStation = null;
+    #[ORM\Column(length: 10)]
+    private ?string $childStation = null;
 
     /**
      * Distance between the two stations in kilometer.
@@ -66,24 +66,24 @@ class Connection
         return $this->id;
     }
 
-    public function getParentStation(): ?Station
+    public function getParentStation(): ?string
     {
         return $this->parentStation;
     }
 
-    public function setParentStation(?Station $parentStation): static
+    public function setParentStation(string $parentStation): static
     {
         $this->parentStation = $parentStation;
 
         return $this;
     }
 
-    public function getChildStation(): ?Station
+    public function getChildStation(): ?string
     {
         return $this->childStation;
     }
 
-    public function setChildStation(?Station $childStation): static
+    public function setChildStation(string $childStation): static
     {
         $this->childStation = $childStation;
 
