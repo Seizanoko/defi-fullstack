@@ -1,6 +1,6 @@
 
 services:
-  # Base de données PostgreSQL
+  # Database PostgreSQL
   database:
     image: postgres:16-alpine
     container_name: defi_database
@@ -28,6 +28,9 @@ services:
         condition: service_healthy
     volumes:
       - ./backend:/app
+      - ./data/stations.sql:/data/stations.sql
+      - ./data/distances.sql:/data/distances.sql
+      - backend_init_flag:/app/var/init 
     networks:
       - defi_network
 
@@ -45,6 +48,7 @@ services:
     networks:
       - defi_network
 
+  # Adminer (database management)
   adminer:
     image: adminer:latest
     depends_on:
@@ -60,6 +64,7 @@ services:
 
 volumes:
   database_data:
+  backend_init_flag:
 
 networks:
   defi_network:
