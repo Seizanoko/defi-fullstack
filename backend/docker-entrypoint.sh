@@ -1,13 +1,6 @@
 #!/bin/sh
 set -e
 
-# Wait for the database to be ready (optional if healthcheck in compose)
-echo "Checking database connection..."
-php bin/console dbal:run-sql "SELECT 1" > /dev/null 2>&1 || {
-    echo "Database not reachable, waiting..."
-    sleep 5
-}
-
 # Run migrations
 php bin/console doctrine:migrations:migrate --no-interaction
 
