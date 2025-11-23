@@ -97,6 +97,11 @@ class Connection
 
     public function setDistance(float $distance): static
     {
+        // Validate that distance is non-negative
+        if ($distance < 0) {
+            throw new \InvalidArgumentException('Distance cannot be negative');
+        }
+
         $this->distance = $distance;
 
         return $this;
