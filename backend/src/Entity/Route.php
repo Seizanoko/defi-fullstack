@@ -127,6 +127,11 @@ class Route
 
     public function setDistanceKm(float $distanceKm): static
     {
+        // Validate that distance is non-negative
+        if ($distanceKm < 0) {
+            throw new \InvalidArgumentException('DistanceKm cannot be negative');
+        }
+
         $this->distanceKm = $distanceKm;
 
         return $this;
