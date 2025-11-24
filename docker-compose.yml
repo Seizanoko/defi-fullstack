@@ -36,15 +36,17 @@ services:
 
   # Nginx (reverse proxy)
   nginx:
-    image: nginx:alpine
+    build:
+      context: ./nginx
     container_name: defi_nginx
     depends_on:
       - backend
     ports:
-      - "8080:80"
+      - "80:80"
+      - "443:443"
     volumes:
-      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
       - ./backend/public:/app/public:ro
+      - nginx_ssl:/etc/nginx/ssl
     networks:
       - defi_network
 
@@ -65,6 +67,7 @@ services:
 volumes:
   database_data:
   backend_init_flag:
+  nginx_ssl:
 
 networks:
   defi_network:
