@@ -13,7 +13,10 @@ use App\Entity\Route;
 class RouteCalculatorTest extends TestCase
 {
     private RouteCalculator $routeCalculator;
+    /** @var StationRepository&\PHPUnit\Framework\MockObject\MockObject */
     private StationRepository $stationRepository;
+
+    /** @var ConnectionRepository&\PHPUnit\Framework\MockObject\MockObject */
     private ConnectionRepository $connectionRepository;
 
     protected function setUp(): void

@@ -46,6 +46,10 @@ class RouteCalculator
 
     }
 
+    /**
+     * Dijkstra's algorithm to find the shortest path between two stations.
+     * @return array<mixed>|null Returns array with 'distance' and 'path' or null if no path found.
+     */
     private function dijkstra(string $start, string $end): ?array
     {
         // Implementation of Dijkstra's algorithm to find the shortest path
