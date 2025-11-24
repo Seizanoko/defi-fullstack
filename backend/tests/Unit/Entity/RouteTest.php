@@ -14,12 +14,12 @@ class RouteTest extends TestCase
 
         // assertions
         $this->assertNull($route->getId());
-        $this->assertNull($route->getFromStationId());
-        $this->assertNull($route->getToStationId());
-        $this->assertNull($route->getAnalyticCode());
-        $this->assertNull($route->getDistanceKm());
+        $this->assertSame('', $route->getFromStationId());
+        $this->assertSame('', $route->getToStationId());
+        $this->assertSame('', $route->getAnalyticCode());
+        $this->assertSame(0.0, $route->getDistanceKm());
         $this->assertSame([], $route->getPath());
-        $this->assertNull($route->getCreatedAt());
+        $this->assertInstanceOf(\DateTimeImmutable::class, $route->getCreatedAt());
     }
 
     public function testSettersAndGetters(): void

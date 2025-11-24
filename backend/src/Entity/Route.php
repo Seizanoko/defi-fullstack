@@ -34,39 +34,39 @@ class Route
     /**
      * Short ID of the origin station.
      *
-     * @var string|null
+     * @var string
      */
     #[ORM\Column(length: 10)]
-    private ?string $fromStationId = null;
+    private string $fromStationId = '';
 
     /**
      * Short ID of the destination station.
      *
-     * @var string|null
+     * @var string
      */
     #[ORM\Column(length: 10)]
-    private ?string $toStationId = null;
+    private string $toStationId = '';
 
     /**
      * Analytical code for this route.
      *
-     * @var string|null
+     * @var string
      */
     #[ORM\Column(length: 50)]
-    private ?string $analyticCode = null;
+    private string $analyticCode = '';
 
     /**
      * Total distance in kilometers.
      *
-     * @var float|null
+     * @var float
      */
     #[ORM\Column]
-    private ?float $distanceKm = null;
+    private float $distanceKm = 0.0;
 
     /**
-     * Path details as an array (structure depends on usage).
+     * Path details as an array.
      *
-     * @var array
+     * @var array<string>
      */
     #[ORM\Column]
     private array $path = [];
@@ -74,17 +74,22 @@ class Route
     /**
      * Creation timestamp (immutable).
      *
-     * @var \DateTimeImmutable|null
+     * @var \DateTimeImmutable
      */
     #[ORM\Column]
-    private ?\DateTimeImmutable $createdAt = null;
+    private \DateTimeImmutable $createdAt;
+
+    public function __construct()
+    {
+        $this->createdAt = new \DateTimeImmutable();
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getFromStationId(): ?string
+    public function getFromStationId(): string
     {
         return $this->fromStationId;
     }
@@ -96,7 +101,7 @@ class Route
         return $this;
     }
 
-    public function getToStationId(): ?string
+    public function getToStationId(): string
     {
         return $this->toStationId;
     }
@@ -108,7 +113,7 @@ class Route
         return $this;
     }
 
-    public function getAnalyticCode(): ?string
+    public function getAnalyticCode(): string
     {
         return $this->analyticCode;
     }
@@ -120,7 +125,7 @@ class Route
         return $this;
     }
 
-    public function getDistanceKm(): ?float
+    public function getDistanceKm(): float
     {
         return $this->distanceKm;
     }
@@ -137,11 +142,19 @@ class Route
         return $this;
     }
 
+    /**
+     * Get the path as an array of station IDs.
+     * @return array<string>
+     */
     public function getPath(): array
     {
         return $this->path;
     }
 
+    /**
+     * Set the path as an array of station IDs.
+     * @param array<string> $path
+     */
     public function setPath(array $path): static
     {
         $this->path = $path;
@@ -149,7 +162,7 @@ class Route
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
     }
