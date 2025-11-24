@@ -28,25 +28,25 @@ class Station
     /**
      * Short unique identifier for the station.
      *
-     * @var string|null
+     * @var string
      */
     #[ORM\Column(length: 10, unique: true)]
-    private ?string $shortName = null;
+    private string $shortName = '';
 
     /**
      * Full name of the station.
      *
-     * @var string|null
+     * @var string
      */
     #[ORM\Column(length: 100)]
-    private ?string $longName = null;
+    private string $longName = '';
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getShortName(): ?string
+    public function getShortName(): string
     {
         return $this->shortName;
     }
@@ -58,7 +58,7 @@ class Station
         return $this;
     }
 
-    public function getLongName(): ?string
+    public function getLongName(): string
     {
         return $this->longName;
     }

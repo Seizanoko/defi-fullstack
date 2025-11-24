@@ -15,8 +15,8 @@ class StationTest extends TestCase
 
         // assertions
         $this->assertNull($station->getId(), 'id is null until persisted');
-        $this->assertNull($station->getShortName(), 'no names set by default');
-        $this->assertNull($station->getLongName(), 'no names set by default');
+        $this->assertSame('', $station->getShortName(), 'no names set by default');
+        $this->assertSame('', $station->getLongName(), 'no names set by default');
     }
 
     public function testSettersAndGetters(): void
