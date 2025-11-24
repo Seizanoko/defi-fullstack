@@ -32,41 +32,41 @@ class Connection
     /**
      * Parent (source) station.
      *
-     * @var string|null
+     * @var string
      */
     #[ORM\Column(length: 10)]
-    private ?string $parentStation = null;
+    private string $parentStation = '';
 
     /**
      * Child (destination) station.
      *
-     * @var string|null
+     * @var string
      */
     #[ORM\Column(length: 10)]
-    private ?string $childStation = null;
+    private string $childStation = '';
 
     /**
      * Distance between the two stations in kilometer.
      *
-     * @var float|null
+     * @var float
      */
     #[ORM\Column]
-    private ?float $distance = null;
+    private float $distance = 0.0;
 
     /**
      * Network or line name this connection belongs to.
      *
-     * @var string|null
+     * @var string
      */
     #[ORM\Column(length: 50)]
-    private ?string $networkName = null;
+    private string $networkName = '';
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getParentStation(): ?string
+    public function getParentStation(): string
     {
         return $this->parentStation;
     }
@@ -78,7 +78,7 @@ class Connection
         return $this;
     }
 
-    public function getChildStation(): ?string
+    public function getChildStation(): string
     {
         return $this->childStation;
     }
@@ -90,7 +90,7 @@ class Connection
         return $this;
     }
 
-    public function getDistance(): ?float
+    public function getDistance(): float
     {
         return $this->distance;
     }
@@ -107,7 +107,7 @@ class Connection
         return $this;
     }
 
-    public function getNetworkName(): ?string
+    public function getNetworkName(): string
     {
         return $this->networkName;
     }

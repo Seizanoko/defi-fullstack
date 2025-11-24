@@ -14,10 +14,10 @@ class ConnectionTest extends TestCase
 
         // assertions
         $this->assertNull($connection->getId());
-        $this->assertNull($connection->getParentStation());
-        $this->assertNull($connection->getChildStation());
-        $this->assertNull($connection->getDistance());
-        $this->assertNull($connection->getNetworkName());
+        $this->assertSame('', $connection->getParentStation());
+        $this->assertSame('', $connection->getChildStation());
+        $this->assertSame(0.0, $connection->getDistance());
+        $this->assertSame('', $connection->getNetworkName());
     }
 
     public function testSettersAndGetters(): void
