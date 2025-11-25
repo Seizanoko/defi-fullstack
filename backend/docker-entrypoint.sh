@@ -4,6 +4,15 @@ set -e
 # Run migrations
 php bin/console doctrine:migrations:migrate --no-interaction
 
+# Generate JWT keys if not already present
+JWT_PRIVATE_KEY="/app/config/jwt/private.pem"
+if [ ! -f "$JWT_PRIVATE_KEY" ]; then
+    echo "Generating JWT key pair..."
+    php bin/console lexik:jwt:generate-keypair --overwrite
+else
+    echo "JWT keys already exist, skipping generation"
+fi
+
 # Load initial data if not already loaded
 DATA_FLAG="/app/var/init/.data-loaded"
 if [ ! -f "$DATA_FLAG" ]; then
