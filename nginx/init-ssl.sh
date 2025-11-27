@@ -25,5 +25,3 @@ if ! [ -f "$CERT_FILE" ] && ! [ -f "$KEY_FILE" ]; then
     
     echo "SSL certificates generated successfully"
 fi
-
-exec nginx -g 'daemon off;'

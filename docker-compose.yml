@@ -74,6 +74,17 @@ services:
     networks:
       - defi_network
 
+  # Frontend Vue.js
+  frontend:
+    build:
+      context: ./frontend
+    container_name: defi_frontend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    networks:
+      - defi_network
+
 volumes:
   database_data:
   backend_init_flag:
