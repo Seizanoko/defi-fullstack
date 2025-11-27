@@ -5,44 +5,50 @@
       <v-form ref="formRef" v-model="valid" @submit.prevent="calculateRoute">
         <v-text-field
           v-model="form.fromStationId"
+          class="mb-4"
+          density="comfortable"
           label="From Station ID"
           :rules="[rules.required]"
           variant="outlined"
-          density="comfortable"
-          class="mb-4"
         />
 
         <v-text-field
           v-model="form.toStationId"
+          class="mb-4"
+          density="comfortable"
           label="To Station ID"
           :rules="[rules.required]"
           variant="outlined"
-          density="comfortable"
-          class="mb-4"
         />
 
         <v-text-field
           v-model="form.analyticCode"
+          class="mb-4"
+          density="comfortable"
           label="Analytic Code"
           :rules="[rules.required]"
           variant="outlined"
-          density="comfortable"
-          class="mb-4"
         />
 
         <v-btn
-          type="submit"
-          color="primary"
-          :loading="loading"
-          :disabled="!valid"
           block
+          color="primary"
+          :disabled="!valid"
+          :loading="loading"
           size="large"
+          type="submit"
         >
           Calculate Route
         </v-btn>
       </v-form>
 
-      <v-alert v-if="error" type="error" class="mt-4" closable @click:close="error = null">
+      <v-alert
+        v-if="error"
+        class="mt-4"
+        closable
+        type="error"
+        @click:close="error = null"
+      >
         {{ error }}
       </v-alert>
     </v-card-text>
@@ -50,43 +56,43 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
-import { routeService } from '@/services/routeService'
-import type { RouteRequest, Route, ApiError } from '@/types'
+  import type { ApiError, Route, RouteRequest } from '@/types'
+  import { reactive, ref } from 'vue'
+  import { routeService } from '@/services/routeService'
 
-const emit = defineEmits<{
-  routeCalculated: [route: Route]
-}>()
+  const emit = defineEmits<{
+    'route-calculated': [route: Route]
+  }>()
 
-const formRef = ref()
-const valid = ref(false)
-const loading = ref(false)
-const error = ref<string | null>(null)
+  const formRef = ref()
+  const valid = ref(false)
+  const loading = ref(false)
+  const error = ref<string | null>(null)
 
-const form = reactive<RouteRequest>({
-  fromStationId: '',
-  toStationId: '',
-  analyticCode: ''
-})
+  const form = reactive<RouteRequest>({
+    fromStationId: '',
+    toStationId: '',
+    analyticCode: '',
+  })
 
-const rules = {
-  required: (v: string) => !!v || 'Field is required'
-}
-
-const calculateRoute = async () => {
-  if (!valid.value) return
-
-  loading.value = true
-  error.value = null
-
-  try {
-    const route = await routeService.calculateRoute(form)
-    emit('routeCalculated', route)
-  } catch (err) {
-    const apiError = err as ApiError
-    error.value = apiError.message || 'Failed to calculate route'
-  } finally {
-    loading.value = false
+  const rules = {
+    required: (v: string) => !!v || 'Field is required',
   }
-}
+
+  async function calculateRoute () {
+    if (!valid.value) return
+
+    loading.value = true
+    error.value = null
+
+    try {
+      const route = await routeService.calculateRoute(form)
+      emit('route-calculated', route)
+    } catch (error_) {
+      const apiError = error_ as ApiError
+      error.value = apiError.message || 'Failed to calculate route'
+    } finally {
+      loading.value = false
+    }
+  }
 </script>

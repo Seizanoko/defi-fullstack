@@ -2,7 +2,7 @@
   <v-app>
     <v-app-bar v-if="isAuthenticated" color="primary" prominent>
       <v-app-bar-title>
-        <v-icon icon="mdi-train" class="mr-2" />
+        <v-icon class="mr-2" icon="mdi-train" />
         MOB Train Routing
       </v-app-bar-title>
       <v-spacer />
@@ -13,7 +13,7 @@
 
     <v-main>
       <Auth v-if="!isAuthenticated" @auth-success="handleAuthSuccess" />
-      
+
       <v-container v-else fluid>
         <v-row>
           <v-col cols="12">
@@ -36,31 +36,31 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import Auth from '@/pages/Auth.vue'
-import RouteCalculator from '@/components/RouteCalculator.vue'
-import RouteResult from '@/components/RouteResult.vue'
-import { authService } from '@/services/authService'
-import type { Route } from '@/types'
+  import type { Route } from '@/types'
+  import { onMounted, ref } from 'vue'
+  import RouteCalculator from '@/components/RouteCalculator.vue'
+  import RouteResult from '@/components/RouteResult.vue'
+  import Auth from '@/pages/Auth.vue'
+  import { authService } from '@/services/authService'
 
-const isAuthenticated = ref(false)
-const calculatedRoute = ref<Route | null>(null)
+  const isAuthenticated = ref(false)
+  const calculatedRoute = ref<Route | null>(null)
 
-const handleRouteCalculated = (route: Route) => {
-  calculatedRoute.value = route
-}
+  function handleRouteCalculated (route: Route) {
+    calculatedRoute.value = route
+  }
 
-const handleAuthSuccess = () => {
-  isAuthenticated.value = true
-}
+  function handleAuthSuccess () {
+    isAuthenticated.value = true
+  }
 
-const handleLogout = () => {
-  authService.logout()
-  isAuthenticated.value = false
-  calculatedRoute.value = null
-}
+  function handleLogout () {
+    authService.logout()
+    isAuthenticated.value = false
+    calculatedRoute.value = null
+  }
 
-onMounted(() => {
-  isAuthenticated.value = authService.isAuthenticated()
-})
+  onMounted(() => {
+    isAuthenticated.value = authService.isAuthenticated()
+  })
 </script>

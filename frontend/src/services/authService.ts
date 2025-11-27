@@ -1,8 +1,8 @@
+import type { AuthResponse, LoginRequest, RegisterRequest } from '@/types'
 import apiClient from './api'
-import type { LoginRequest, RegisterRequest, AuthResponse } from '@/types'
 
 export const authService = {
-  async login(credentials: LoginRequest): Promise<AuthResponse> {
+  async login (credentials: LoginRequest): Promise<AuthResponse> {
     const response = await apiClient.post<AuthResponse>('/auth/login', credentials)
     if (response.data.token) {
       localStorage.setItem('auth_token', response.data.token)
@@ -10,7 +10,7 @@ export const authService = {
     return response.data
   },
 
-  async register(data: RegisterRequest): Promise<AuthResponse> {
+  async register (data: RegisterRequest): Promise<AuthResponse> {
     const response = await apiClient.post<AuthResponse>('/auth/register', data)
     if (response.data.token) {
       localStorage.setItem('auth_token', response.data.token)
@@ -18,11 +18,11 @@ export const authService = {
     return response.data
   },
 
-  logout() {
+  logout () {
     localStorage.removeItem('auth_token')
   },
 
-  isAuthenticated(): boolean {
+  isAuthenticated (): boolean {
     return !!localStorage.getItem('auth_token')
-  }
+  },
 }

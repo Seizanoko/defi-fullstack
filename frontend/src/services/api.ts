@@ -1,11 +1,12 @@
-import axios, { type AxiosInstance, AxiosError } from 'axios'
+import type { AxiosError, AxiosInstance } from 'axios'
 import type { ApiError } from '@/types'
+import axios from 'axios'
 
 const apiClient: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
   headers: {
-    'Content-Type': 'application/json'
-  }
+    'Content-Type': 'application/json',
+  },
 })
 
 // Request interceptor for adding auth token
@@ -17,7 +18,7 @@ apiClient.interceptors.request.use(
     }
     return config
   },
-  error => Promise.reject(error)
+  error => Promise.reject(error),
 )
 
 // Response interceptor for error handling
@@ -27,10 +28,10 @@ apiClient.interceptors.response.use(
     const apiError: ApiError = {
       message: error.response?.data?.message || error.message || 'An error occurred',
       code: error.response?.data?.code,
-      details: error.response?.data?.details
+      details: error.response?.data?.details,
     }
     return Promise.reject(apiError)
-  }
+  },
 )
 
 export default apiClient

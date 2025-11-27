@@ -51,13 +51,13 @@
 </template>
 
 <script setup lang="ts">
-import type { Route } from '@/types'
+  import type { Route } from '@/types'
 
-defineProps<{
-  route: Route
-}>()
+  defineProps<{
+    route: Route
+  }>()
 
-const formatDate = (dateString: string): string => {
-  return new Date(dateString).toLocaleString()
-}
+  function formatDate (dateString: string): string {
+    return new Date(dateString).toLocaleString()
+  }
 </script>

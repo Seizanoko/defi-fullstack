@@ -1,7 +1,7 @@
 <template>
   <v-container>
-    <v-row justify="center" align="center" style="min-height: 80vh;">
-      <v-col cols="12" sm="8" md="6" lg="4">
+    <v-row align="center" justify="center" style="min-height: 80vh;">
+      <v-col cols="12" lg="4" md="6" sm="8">
         <Login
           v-if="showLogin"
           @login-success="handleAuthSuccess"
@@ -18,17 +18,17 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import Login from '@/components/Login.vue'
-import Register from '@/components/Register.vue'
+  import { ref } from 'vue'
+  import Login from '@/components/Login.vue'
+  import Register from '@/components/Register.vue'
 
-const emit = defineEmits<{
-  authSuccess: []
-}>()
+  const emit = defineEmits<{
+    'auth-success': []
+  }>()
 
-const showLogin = ref(true)
+  const showLogin = ref(true)
 
-const handleAuthSuccess = () => {
-  emit('authSuccess')
-}
+  function handleAuthSuccess () {
+    emit('auth-success')
+  }
 </script>
