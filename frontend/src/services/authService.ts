@@ -1,18 +1,9 @@
-import axios from 'axios'
+import apiClient from './api'
 import type { LoginRequest, RegisterRequest, AuthResponse } from '@/types'
-
-// Create a separate axios instance for auth (outside OpenAPI spec)
-const authClient = axios.create({
-  baseURL: 'https://localhost/api/auth',
-  timeout: 10000,
-  headers: {
-    'Content-Type': 'application/json'
-  }
-})
 
 export const authService = {
   async login(credentials: LoginRequest): Promise<AuthResponse> {
-    const response = await authClient.post<AuthResponse>('/login', credentials)
+    const response = await apiClient.post<AuthResponse>('/auth/login', credentials)
     if (response.data.token) {
       localStorage.setItem('auth_token', response.data.token)
     }
@@ -20,7 +11,7 @@ export const authService = {
   },
 
   async register(data: RegisterRequest): Promise<AuthResponse> {
-    const response = await authClient.post<AuthResponse>('/register', data)
+    const response = await apiClient.post<AuthResponse>('/auth/register', data)
     if (response.data.token) {
       localStorage.setItem('auth_token', response.data.token)
     }
