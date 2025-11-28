@@ -39,3 +39,19 @@ export interface User {
   id: string
   username: string
 }
+
+export interface AnalyticDistance {
+  analyticCode: string
+  totalDistanceKm: number
+  periodStart: string
+  periodEnd: string
+  group: string
+}
+
+export interface AnalyticDistanceList {
+  from: string
+  to: string
+  groupBy: 'day' | 'month' | 'year' | 'none'
+  items: AnalyticDistance[]
+}
+
