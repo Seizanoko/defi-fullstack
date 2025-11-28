@@ -12,13 +12,15 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 
 class AuthController extends AbstractController
 {
     public function __construct(
         private EntityManagerInterface $entityManager,
         private UserPasswordHasherInterface $passwordHasher,
-        private ValidatorInterface $validator
+        private ValidatorInterface $validator,
+        private JWTTokenManagerInterface $jwtManager
     ) {}
 
     #[Route('/api/auth/register', name: 'api_register', methods: ['POST'])]
@@ -80,12 +82,16 @@ class AuthController extends AbstractController
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 
+        // Generate JWT token
+        $token = $this->jwtManager->create($user);
+
         return $this->json([
             'message' => 'User registered successfully',
             'user' => [
                 'id' => $user->getId(),
                 'username' => $user->getUsername(),
-            ]
+            ],
+            'token' => $token
         ], Response::HTTP_CREATED);
     }
 
