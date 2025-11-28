@@ -5,62 +5,62 @@
         <v-icon class="mr-2" icon="mdi-train" />
         MOB Train Routing
       </v-app-bar-title>
+
       <v-spacer />
+
       <v-btn icon @click="handleLogout">
         <v-icon>mdi-logout</v-icon>
       </v-btn>
     </v-app-bar>
 
     <v-main>
+      <!-- LOGIN -->
       <Auth v-if="!isAuthenticated" @auth-success="handleAuthSuccess" />
 
-      <v-container v-else fluid>
-        <v-row>
-          <v-col cols="12">
-            <h1 class="text-h3 mb-6">Calculate Train Route</h1>
-          </v-col>
-        </v-row>
+      <!-- MAIN APP -->
+      <template v-else>
+        <!-- TABS -->
+        <v-tabs
+          v-model="activeTab"
+          background-color="primary"
+          grow
+          dark
+        >
+          <v-tab to="/calculate" value="/calculate">Calculate Route</v-tab>
+          <v-tab to="/stats" value="/stats">Stats</v-tab>
+        </v-tabs>
 
-        <v-row>
-          <v-col cols="12" md="6">
-            <RouteCalculator @route-calculated="handleRouteCalculated" />
-          </v-col>
-
-          <v-col cols="12" md="6">
-            <RouteResult v-if="calculatedRoute" :route="calculatedRoute" />
-          </v-col>
-        </v-row>
-      </v-container>
+        <router-view />
+      </template>
     </v-main>
   </v-app>
 </template>
 
 <script setup lang="ts">
-  import type { Route } from '@/types'
-  import { onMounted, ref } from 'vue'
-  import RouteCalculator from '@/components/RouteCalculator.vue'
-  import RouteResult from '@/components/RouteResult.vue'
-  import Auth from '@/pages/Auth.vue'
-  import { authService } from '@/services/authService'
+import { ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
+import Auth from '@/pages/Auth.vue'
+import { authService } from '@/services/authService'
 
-  const isAuthenticated = ref(false)
-  const calculatedRoute = ref<Route | null>(null)
+const isAuthenticated = ref(false)
+const route = useRoute()
 
-  function handleRouteCalculated (route: Route) {
-    calculatedRoute.value = route
+// keep tabs synced with current route
+const activeTab = ref(route.path)
+
+watch(
+  () => route.path,
+  (p) => {
+    activeTab.value = p
   }
+)
 
-  function handleAuthSuccess () {
-    isAuthenticated.value = true
-  }
+function handleAuthSuccess() {
+  isAuthenticated.value = true
+}
 
-  function handleLogout () {
-    authService.logout()
-    isAuthenticated.value = false
-    calculatedRoute.value = null
-  }
-
-  onMounted(() => {
-    isAuthenticated.value = authService.isAuthenticated()
-  })
+function handleLogout() {
+  authService.logout()
+  isAuthenticated.value = false
+}
 </script>
