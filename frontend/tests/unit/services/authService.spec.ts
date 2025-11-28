@@ -1,6 +1,6 @@
-import { describe, expect, it, beforeEach, vi } from 'vitest'
-import { authService } from '@/services/authService'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import apiClient from '@/services/api'
+import { authService } from '@/services/authService'
 
 beforeEach(() => {
   vi.restoreAllMocks()

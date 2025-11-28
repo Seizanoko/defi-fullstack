@@ -6,9 +6,8 @@ import Components from 'unplugin-vue-components/vite'
 import VueRouter from 'unplugin-vue-router/vite'
 
 // Utilities
-import { defineConfig } from 'vite'
-import { defineConfig as defineVitestConfig } from 'vitest/config'
 import Vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
+import { defineConfig as defineVitestConfig } from 'vitest/config'
 // https://vitejs.dev/config/
 const isTest = !!process.env.VITEST
 

@@ -1,15 +1,13 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+import RouteCalculator from '@/components/RouteCalculator.vue'
+
+import { routeService } from '@/services/routeService'
 import { V_STUBS } from '../test-utils'
 
 vi.mock('@/services/routeService', () => ({
   routeService: { calculateRoute: vi.fn() },
 }))
-
-import RouteCalculator from '@/components/RouteCalculator.vue'
-import { routeService } from '@/services/routeService'
-
-const GLOBAL_STUBS = ['v-card','v-form','v-text-field','v-btn','v-alert']
 
 beforeEach(() => {
   vi.restoreAllMocks()
@@ -18,7 +16,7 @@ beforeEach(() => {
 // RouteCalculator component tests
 describe('RouteCalculator', () => {
   it('calls service and emits route-calculated on success', async () => {
-    const fakeRoute = { id: 'r1', fromStationId: 'A', toStationId: 'B', analyticCode: 'c', distanceKm: 1, path: ['A','B'], createdAt: new Date().toISOString() }
+    const fakeRoute = { id: 'r1', fromStationId: 'A', toStationId: 'B', analyticCode: 'c', distanceKm: 1, path: ['A', 'B'], createdAt: new Date().toISOString() }
     ;(routeService.calculateRoute as any).mockResolvedValue(fakeRoute)
 
     const wrapper = shallowMount(RouteCalculator, { global: { stubs: V_STUBS } })

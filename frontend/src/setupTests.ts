@@ -3,6 +3,9 @@
 // Vitest setup file — configures the jsdom environment for tests
 
 // Provide a minimal matchMedia stub used by Vuetify and other UI libs
+// Clear localStorage between tests by default
+import { beforeEach } from 'vitest'
+
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
   value: (query: string) => ({
@@ -25,9 +28,6 @@ class ResizeObserverMock {
 }
 
 global.ResizeObserver = global.ResizeObserver || ResizeObserverMock
-
-// Clear localStorage between tests by default
-import { beforeEach } from 'vitest'
 beforeEach(() => {
   localStorage.clear()
 })

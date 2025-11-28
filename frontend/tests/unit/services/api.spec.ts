@@ -1,5 +1,5 @@
-import apiClient from '@/services/api'
 import { describe, expect, it } from 'vitest'
+import apiClient from '@/services/api'
 
 // API client tests
 describe('api client', () => {

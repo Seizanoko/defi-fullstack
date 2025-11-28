@@ -1,5 +1,8 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+import Login from '@/components/Login.vue'
+
+import { authService } from '@/services/authService'
 import { V_STUBS } from '../test-utils'
 
 vi.mock('@/services/authService', () => ({
@@ -7,11 +10,6 @@ vi.mock('@/services/authService', () => ({
     login: vi.fn(),
   },
 }))
-
-import Login from '@/components/Login.vue'
-import { authService } from '@/services/authService'
-
-const GLOBAL_STUBS = ['v-card', 'v-form', 'v-text-field', 'v-btn', 'v-alert', 'v-divider']
 
 beforeEach(() => {
   vi.restoreAllMocks()
