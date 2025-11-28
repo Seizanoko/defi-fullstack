@@ -7,10 +7,13 @@ import VueRouter from 'unplugin-vue-router/vite'
 
 // Utilities
 import { defineConfig } from 'vite'
+import { defineConfig as defineVitestConfig } from 'vitest/config'
 import Vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
-
 // https://vitejs.dev/config/
-export default defineConfig({
+const isTest = !!process.env.VITEST
+
+/// <reference types="vitest/config" />
+export default defineVitestConfig({
   plugins: [
     VueRouter({
       dts: 'src/typed-router.d.ts',
@@ -20,7 +23,9 @@ export default defineConfig({
     }),
     // https://github.com/vuetifyjs/vuetify-loader/tree/master/packages/vite-plugin#readme
     Vuetify({
-      autoImport: true,
+      // disable auto import during test run so Vitest doesn't pull Vuetify's
+      // internal component modules (which import CSS and cause ESM errors)
+      autoImport: !isTest,
       styles: {
         configFile: 'src/styles/settings.scss',
       },
@@ -66,5 +71,15 @@ export default defineConfig({
   },
   server: {
     port: 3000,
+  },
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: 'src/setupTests.ts',
+    coverage: {
+      provider: 'istanbul',
+      reporter: ['text', 'lcov', 'html'],
+      include: ['src/**/*.{ts,tsx,vue}'],
+    },
   },
 })
