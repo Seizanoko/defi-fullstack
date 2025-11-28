@@ -3,11 +3,11 @@
   "compilerOptions": {
     "composite": true,
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.vitest.tsbuildinfo",
-    "types": ["vitest/globals", "node"]
+    "types": ["vitest/globals", "node", "vite/client", "unplugin-vue-router/client"]
   },
   "include": [
     "tests/**/*",
-    "src/**/*",  // Add this to include the source files your tests import
-    "src/**/*.vue"  // Add this to include Vue components
+    "src/**/*",
+    "src/**/*.vue" 
   ]
 }
