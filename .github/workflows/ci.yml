@@ -258,17 +258,7 @@ jobs:
           tags: defi-fullstack-backend:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
-
-      - name: Build frontend image (dev)
-        uses: docker/build-push-action@v5
-        with:
-          context: ./frontend
-          target: development
-          push: false
-          tags: defi-fullstack-frontend:dev
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-
+          
       - name: Build frontend image (prod)
         uses: docker/build-push-action@v5
         with:
