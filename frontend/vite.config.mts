@@ -76,8 +76,8 @@ export default defineVitestConfig({
     environment: 'jsdom',
     setupFiles: 'src/setupTests.ts',
     coverage: {
-      provider: 'istanbul',
-      reporter: ['text', 'lcov', 'html'],
+      provider: 'v8',
+      reporter: ['text', 'json', 'lcov', 'html'],
       include: ['src/**/*.{ts,tsx,vue}'],
     },
   },
