@@ -3,8 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\Route;
+use DateTimeImmutable;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * @extends ServiceEntityRepository<Route>
@@ -22,7 +24,15 @@ class RouteRepository extends ServiceEntityRepository
      * @param \DateTimeImmutable|null $fromDate
      * @param \DateTimeImmutable|null $toDate
      * @param string $groupBy 'none', 'day', 'month', or 'year'
-     * @return array
+     * @return list<
+     *      array{
+     *         analyticCode: string,
+     *         totalDistanceKm: float,
+     *         group?: string,
+     *         periodStart?: string,
+     *         periodEnd?: string
+     *     }
+     * >
      */
     public function getDistanceStatistics(
         ?\DateTimeImmutable $fromDate,
@@ -62,8 +72,14 @@ class RouteRepository extends ServiceEntityRepository
 
     /**
      * Get statistics grouped only by analytic code (no time grouping)
+     * @return list<array{
+     *     analyticCode: string,
+     *     totalDistanceKm: float,
+     *     periodStart?: string,
+     *     periodEnd?: string
+     * }>
      */
-    private function getStatsByAnalyticCode($qb, $fromDate, $toDate): array
+    private function getStatsByAnalyticCode(QueryBuilder $qb, ?\DateTimeImmutable $fromDate, ?\DateTimeImmutable $toDate): array
     {
         $qb->select('r.analyticCode', 'SUM(r.distanceKm) as totalDistanceKm')
            ->groupBy('r.analyticCode')
@@ -91,8 +107,15 @@ class RouteRepository extends ServiceEntityRepository
 
     /**
      * Get statistics grouped by analytic code and day
+     * @return list<array{
+     *     analyticCode: string,
+     *     totalDistanceKm: float,
+     *     group: string,
+     *     periodStart: string,
+     *     periodEnd: string
+     * }>
      */
-    private function getStatsByDay($qb, $fromDate, $toDate): array
+    private function getStatsByDay(QueryBuilder $qb, ?\DateTimeImmutable $fromDate, ?\DateTimeImmutable $toDate): array
     {
         // Use DAY() function to group by day
         $qb->select(
@@ -119,8 +142,15 @@ class RouteRepository extends ServiceEntityRepository
 
     /**
      * Get statistics grouped by analytic code and month
+     * @return list<array{
+     *     analyticCode: string,
+     *     totalDistanceKm: float,
+     *     group: string,
+     *     periodStart: string,
+     *     periodEnd: string
+     * }>
      */
-    private function getStatsByMonth($qb, $fromDate, $toDate): array
+    private function getStatsByMonth(QueryBuilder $qb, ?\DateTimeImmutable $fromDate, ?\DateTimeImmutable $toDate): array
     {
         // Use YEAR() and MONTH() functions to group by month
         $qb->select(
@@ -157,8 +187,15 @@ class RouteRepository extends ServiceEntityRepository
 
     /**
      * Get statistics grouped by analytic code and year
+     * @return list<array{
+     *     analyticCode: string,
+     *     totalDistanceKm: float,
+     *     group: string,
+     *     periodStart: string,
+     *     periodEnd: string
+     * }>
      */
-    private function getStatsByYear($qb, $fromDate, $toDate): array
+    private function getStatsByYear(QueryBuilder $qb, ?\DateTimeImmutable $fromDate, ?\DateTimeImmutable $toDate): array
     {
         // Use YEAR() function to group by year
         $qb->select(

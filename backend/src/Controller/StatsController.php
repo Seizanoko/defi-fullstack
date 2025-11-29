@@ -67,6 +67,12 @@ class StatsController extends AbstractController
         }
     }
 
+    /**
+     * @return array{
+     *     message: string,
+     *     details?: array<string>
+     * }|null
+     */
     private function validateParameters(?string $from, ?string $to, string $groupBy): ?array
     {
         // Validate groupBy
