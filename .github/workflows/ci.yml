@@ -85,7 +85,7 @@ jobs:
       postgres:
         image: postgres:16-alpine
         env:
-          POSTGRES_DB: defi_fullstack_test
+          POSTGRES_DB: defi_fullstack
           POSTGRES_USER: test_user
           POSTGRES_PASSWORD: test_password
         options: >-
